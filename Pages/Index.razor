@@ -1,0 +1,12 @@
+﻿@page "/"
+@using BlazorClientApp.Weavy
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+<Weavy id="blazor">
+    <WeavyApp SpaceKey="blazor-space" key="blazor-posts" type="posts" name="Blazor Posts" controls=true />
+    <WeavyApp SpaceKey="blazor-space" key="blazor-files" type="files" name="Blazor Files" />
+</Weavy>

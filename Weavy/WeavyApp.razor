@@ -1,0 +1,33 @@
+﻿@using BlazorClientApp.Weavy
+@implements IDisposable
+
+<div @ref="weavyContainer" style="height: 300px;"></div>
+
+@code{ 
+    ElementReference weavyContainer;
+
+    [CascadingParameter]
+    protected WeavyReference weavy { get; set; }
+
+    [Parameter]
+    public string SpaceKey { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> Options { get; set; }
+
+    public SpaceReference space;
+    public AppReference app;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            Options.Add("container", weavyContainer);
+
+            space = await weavy.Space(new { key = SpaceKey });
+            app = await space.App(Options);
+        }
+    }
+
+    public void Dispose () {
+        app?.Remove();
+    }
+}

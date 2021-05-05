@@ -1,0 +1,25 @@
+﻿@using BlazorClientApp.Weavy
+@implements IDisposable
+@inject WeavyJsInterop wvy
+
+<CascadingValue Value="weavy">
+    @ChildContent
+</CascadingValue>
+
+@code{
+    WeavyReference weavy;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> Options { get; set; }
+
+    protected override void OnInitialized() {
+        weavy = new(wvy, Options);
+    }
+
+    public void Dispose() {
+        weavy?.Destroy();
+    }
+}
