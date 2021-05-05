@@ -6,7 +6,16 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<button @onclick="@(e => { FilesKey = "blazor-files-2019"; FilesName = "Blazor Files 2019"; })">2019</button>
+<button @onclick="@(e => { FilesKey = "blazor-files-2020"; FilesName = "Blazor Files 2020"; })">2020</button>
+
 <Weavy id="blazor">
     <WeavyApp SpaceKey="blazor-space" key="blazor-posts" type="posts" name="Blazor Posts" controls=true />
-    <WeavyApp SpaceKey="blazor-space" key="blazor-files" type="files" name="Blazor Files" />
+    <WeavyApp SpaceKey="blazor-space" type="files" @key="FilesKey" key="@FilesKey" name="@FilesName" />
 </Weavy>
+
+@code {
+    private string FilesKey { get; set; } = "blazor-files";
+    private string FilesName { get; set; }  = "Blazor Files";
+}
