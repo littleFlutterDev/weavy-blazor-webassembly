@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System.Collections;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Weavy {

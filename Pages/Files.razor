@@ -1,0 +1,19 @@
+﻿@page "/files"
+
+<h1>Files</h1>
+
+<nav class="nav my-2">
+    <button class="btn" @onclick="@(e => { FilesKey = "blazor-files-2019"; FilesName = "Blazor Files 2019"; })">2019</button>
+    <button class="btn" @onclick="@(e => { FilesKey = "blazor-files-2020"; FilesName = "Blazor Files 2020"; })">2020</button>
+</nav>
+
+<Weavy>
+    <div class="card">
+        <WeavyApp SpaceKey="blazor-space" type="files" @key="FilesKey" key="@FilesKey" name="@FilesName" />
+    </div>
+</Weavy>
+
+@code {
+    private string FilesKey { get; set; } = "blazor-files";
+    private string FilesName { get; set; }  = "Blazor Files";
+}
