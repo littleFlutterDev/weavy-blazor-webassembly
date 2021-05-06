@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace BlazorClientApp.Weavy {
+namespace BlazorApp.Weavy {
     public class WeavyJsInterop : IDisposable {
         private bool initialized = false;
         private readonly IJSRuntime js;

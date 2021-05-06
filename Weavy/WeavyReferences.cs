@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 
-namespace BlazorClientApp.Weavy {
+namespace BlazorApp.Weavy {
     public class WeavyReference : ExtendableJSObjectReference {
         private bool initialized = false;
         public WeavyJsInterop wvy;

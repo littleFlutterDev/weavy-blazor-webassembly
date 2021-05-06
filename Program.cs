@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using BlazorClientApp.Weavy;
+using BlazorApp.Weavy;
 
-namespace BlazorClientApp
+namespace BlazorApp
 {
     public class Program
     {
