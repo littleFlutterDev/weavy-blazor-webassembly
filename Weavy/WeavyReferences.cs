@@ -2,22 +2,26 @@
 using System.Threading.Tasks;
 
 namespace BlazorApp.Weavy {
+    //
+    // Summary:
+    //     Wrapped IJSObjectReference to the Weavy instance in Javascript.
+    //     Adds .Space() and .Destroy() methods.
     public class WeavyReference : ExtendableJSObjectReference {
-        private bool initialized = false;
-        public WeavyJsInterop wvy;
-        public object options;
+        private bool Initialized = false;
+        public WeavyJsInterop Wvy;
+        public object Options;
         public ValueTask<IJSObjectReference> WhenWeavy;
 
         public WeavyReference(WeavyJsInterop wvy = null, object options = null, IJSObjectReference weavy = null) : base(weavy) {
-            this.options = options;
-            this.wvy = wvy;
+            Options = options;
+            Wvy = wvy;
         }
 
         public async Task Init() {
-            if(!initialized) {
-                initialized = true;
-                WhenWeavy = wvy.Weavy(options);
-                objectReference = await WhenWeavy;
+            if(!Initialized) {
+                Initialized = true;
+                WhenWeavy = Wvy.Weavy(Options);
+                ObjectReference = await WhenWeavy;
             } else {
                 await WhenWeavy;
             }
@@ -25,45 +29,53 @@ namespace BlazorApp.Weavy {
 
         public async ValueTask<SpaceReference> Space(object spaceSelector = null) {
             await Init();
-            return new(await objectReference.InvokeAsync<IJSObjectReference>("space", new object[] { spaceSelector }));
+            return new(await ObjectReference.InvokeAsync<IJSObjectReference>("space", new object[] { spaceSelector }));
         }
 
         public async Task Destroy() {
-            await objectReference.InvokeVoidAsync("destroy");
+            await ObjectReference.InvokeVoidAsync("destroy");
             await DisposeAsync();
         }
     }
 
+    //
+    // Summary:
+    //     Wrapped IJSObjectReference to a Weavy Space in Javascript.
+    //     Adds .App() and .Remove() methods.
     public class SpaceReference : ExtendableJSObjectReference {
         public SpaceReference(IJSObjectReference space) : base(space) { }
 
         public async ValueTask<AppReference> App(object appSelector = null) {
-            return new(await objectReference.InvokeAsync<IJSObjectReference>("app", new object[] { appSelector }));
+            return new(await ObjectReference.InvokeAsync<IJSObjectReference>("app", new object[] { appSelector }));
         }
 
         public async Task Remove() {
-            await objectReference.InvokeVoidAsync("remove");
+            await ObjectReference.InvokeVoidAsync("remove");
             await DisposeAsync();
         }
     }
 
+    //
+    // Summary:
+    //     Wrapped IJSObjectReference to a Weavy App in Javascript.
+    //     Adds .Open(), .Close(), .Toggle() and .Remove() methods()
     public class AppReference : ExtendableJSObjectReference {
         public AppReference(IJSObjectReference app) : base(app) { }
 
         public ValueTask Open() {
-            return objectReference.InvokeVoidAsync("open", new object[] { });
+            return ObjectReference.InvokeVoidAsync("open");
         }
 
         public ValueTask Close() {
-            return objectReference.InvokeVoidAsync("close", new object[] { });
+            return ObjectReference.InvokeVoidAsync("close");
         }
 
         public ValueTask Toggle() {
-            return objectReference.InvokeVoidAsync("toggle", new object[] { });
+            return ObjectReference.InvokeVoidAsync("toggle");
         }
 
         public async Task Remove() {
-            await objectReference.InvokeVoidAsync("remove");
+            await ObjectReference.InvokeVoidAsync("remove");
             await DisposeAsync();
         }
     }

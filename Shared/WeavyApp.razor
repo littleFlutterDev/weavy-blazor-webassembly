@@ -1,12 +1,12 @@
 ﻿@implements IDisposable
 
-<div @ref="weavyContainer"class="weavy-app"></div>
+<div @ref="WeavyContainer"class="weavy-app"></div>
 
 @code{ 
-    ElementReference weavyContainer;
+    ElementReference WeavyContainer;
 
     [CascadingParameter]
-    protected WeavyReference weavy { get; set; }
+    protected WeavyReference Weavy { get; set; }
 
     [Parameter]
     public string SpaceKey { get; set; }
@@ -14,19 +14,19 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IDictionary<string, object> Options { get; set; }
 
-    public SpaceReference space;
-    public AppReference app;
+    public SpaceReference Space;
+    public AppReference App;
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         if (firstRender) {
-            Options.Add("container", weavyContainer);
+            Options.Add("container", WeavyContainer);
 
-            space = await weavy.Space(new { key = SpaceKey });
-            app = await space.App(Options);
+            Space = await Weavy.Space(new { key = SpaceKey });
+            App = await Space.App(Options);
         }
     }
 
     public void Dispose () {
-        app?.Remove();
+        App?.Remove();
     }
 }

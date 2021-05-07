@@ -1,12 +1,12 @@
 ﻿@implements IDisposable
-@inject WeavyJsInterop wvy
+@inject WeavyJsInterop Wvy
 
-<CascadingValue Value="weavy">
+<CascadingValue Value="WeavyRef">
     @ChildContent
 </CascadingValue>
 
 @code{
-    WeavyReference weavy;
+    WeavyReference WeavyRef;
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
@@ -15,10 +15,10 @@
     public IDictionary<string, object> Options { get; set; }
 
     protected override void OnInitialized() {
-        weavy = new(wvy, Options);
+        WeavyRef = new(Wvy, Options);
     }
 
     public void Dispose() {
-        weavy?.Destroy();
+        WeavyRef?.Destroy();
     }
 }

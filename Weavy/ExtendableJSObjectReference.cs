@@ -3,24 +3,29 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Weavy {
+    //
+    // Summary:
+    //     Wrapper around a IJSObjectReference to enable extending
     public class ExtendableJSObjectReference : IJSObjectReference {
-        public IJSObjectReference objectReference;
+        public IJSObjectReference ObjectReference;
 
-        public ExtendableJSObjectReference(IJSObjectReference reference = null) {
-            objectReference = reference;
+        // Constructed using another IJSObjectReference
+        // Possibility to delay ObjectReference assignment
+        public ExtendableJSObjectReference(IJSObjectReference objectReference = null) {
+            ObjectReference = objectReference;
         }
 
         // IMPLEMENT DEFAULT
         public ValueTask DisposeAsync() {
-            return objectReference.DisposeAsync();
+            return ObjectReference.DisposeAsync();
         }
 
         public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object[] args) {
-            return objectReference.InvokeAsync<TValue>(identifier, args);
+            return ObjectReference.InvokeAsync<TValue>(identifier, args);
         }
 
         public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object[] args) {
-            return objectReference.InvokeAsync<TValue>(identifier, cancellationToken, args);
+            return ObjectReference.InvokeAsync<TValue>(identifier, cancellationToken, args);
         }
     }
 }
