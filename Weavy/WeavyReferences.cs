@@ -8,19 +8,19 @@ namespace BlazorApp.Weavy {
     //     Adds .Space() and .Destroy() methods.
     public class WeavyReference : ExtendableJSObjectReference {
         private bool Initialized = false;
-        public WeavyJsInterop Wvy;
+        public WeavyJsInterop WeavyService;
         public object Options;
         public ValueTask<IJSObjectReference> WhenWeavy;
 
-        public WeavyReference(WeavyJsInterop wvy = null, object options = null, IJSObjectReference weavy = null) : base(weavy) {
+        public WeavyReference(WeavyJsInterop weavyService = null, object options = null, IJSObjectReference weavy = null) : base(weavy) {
             Options = options;
-            Wvy = wvy;
+            WeavyService = weavyService;
         }
 
         public async Task Init() {
             if(!Initialized) {
                 Initialized = true;
-                WhenWeavy = Wvy.Weavy(Options);
+                WhenWeavy = WeavyService.Weavy(Options);
                 ObjectReference = await WhenWeavy;
             } else {
                 await WhenWeavy;
@@ -32,6 +32,7 @@ namespace BlazorApp.Weavy {
             return new(await ObjectReference.InvokeAsync<IJSObjectReference>("space", new object[] { spaceSelector }));
         }
 
+        // Used for cleanup
         public async Task Destroy() {
             await ObjectReference.InvokeVoidAsync("destroy");
             await DisposeAsync();
@@ -49,6 +50,7 @@ namespace BlazorApp.Weavy {
             return new(await ObjectReference.InvokeAsync<IJSObjectReference>("app", new object[] { appSelector }));
         }
 
+        // Used for cleanup
         public async Task Remove() {
             await ObjectReference.InvokeVoidAsync("remove");
             await DisposeAsync();
@@ -74,6 +76,7 @@ namespace BlazorApp.Weavy {
             return ObjectReference.InvokeVoidAsync("toggle");
         }
 
+        // Used for cleanup
         public async Task Remove() {
             await ObjectReference.InvokeVoidAsync("remove");
             await DisposeAsync();
