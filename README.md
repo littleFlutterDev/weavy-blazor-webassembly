@@ -1,4 +1,7 @@
 # weavy-blazor-webassembly
+
+![Weavy Blazor WebAssembly](https://repository-images.githubusercontent.com/364427546/d5b97b80-ba68-11eb-9e20-08572c1867c1)
+
 A demo project showcasing the Weavy Drop-In UI wrapped in a Blazor component.
 
 ```
